@@ -33,6 +33,11 @@
     - Run docker sudo systemctl start docker
     - Run sudo docker compose up --build -d
 - Add inbound rule to open port 8000 in instance's security group
+- admin and user access differentiated
+- pagination
+- added boto3 dependency
+- upload image logic and s3 integration
+
 
 
 
