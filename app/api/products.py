@@ -2,7 +2,7 @@ from fastapi import APIRouter, UploadFile, File, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from app.core.database import SessionLocal
-from app.core.s3 import upload_image
+#from app.core.s3 import upload_image
 from app.api.deps import get_current_user
 from app.models.product import Product
 
@@ -26,7 +26,7 @@ def list_products(
     query = db.query(Product)
 
     if search:
-        query = query.filter(Product.title.ilike(f"%{search}%"))
+        query = query.filter(Product.title.like(f"%{search}%"))
 
     products = query.offset((page - 1) * limit).limit(limit).all()
     db.close()
@@ -34,18 +34,18 @@ def list_products(
 
 
 
-@router.post("/upload-image")
-def upload_product_image(
-    file: UploadFile = File(...),
-    current_user=Depends(get_current_user)
-):
-    # Validate file type
-    if not file.content_type.startswith("image/"):
-        raise HTTPException(status_code=400, detail="Only image files allowed")
+# @router.post("/upload-image")
+# def upload_product_image(
+#     file: UploadFile = File(...),
+#     current_user=Depends(get_current_user)
+# ):
+#     # Validate file type
+#     if not file.content_type.startswith("image/"):
+#         raise HTTPException(status_code=400, detail="Only image files allowed")
 
-    image_url = upload_image(file.file)
+#     image_url = upload_image(file.file)
 
-    return {
-        "message": "Image uploaded successfully",
-        "image_url": image_url
-    }
+#     return {
+#         "message": "Image uploaded successfully",
+#         "image_url": image_url
+#     }

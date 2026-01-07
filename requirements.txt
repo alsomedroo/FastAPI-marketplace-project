@@ -8,3 +8,5 @@ alembic
 python-dotenv
 pydantic[email]
 boto3
+python-multipart
+
